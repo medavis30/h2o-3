@@ -1157,6 +1157,23 @@ buildModelSaveMojoGLM <- function(params) {
   return(list("model"=model, "dirName"=tmpdir_name))
 }
 
+buildModelSaveMojoGAM <- function(params) {
+  model <- do.call("h2o.gam", params)
+  model_key <- model@model_id
+  tmpdir_name <- sprintf("%s/tmp_model_%s", sandbox(), as.character(Sys.getpid()))
+  if (.Platform$OS.type == "windows") {
+    shell(sprintf("C:\\cygwin64\\bin\\rm.exe -fr %s", normalizePath(tmpdir_name)))
+    shell(sprintf("C:\\cygwin64\\bin\\mkdir.exe -p %s", normalizePath(tmpdir_name)))
+  } else {
+    safeSystem(sprintf("rm -fr %s", tmpdir_name))
+    safeSystem(sprintf("mkdir -p %s", tmpdir_name))
+  }
+  h2o.save_mojo(model, path = tmpdir_name, force = TRUE) # save mojo
+  h2o.saveModel(model, path = tmpdir_name, force=TRUE) # save model to compare mojo/h2o predict offline
+  
+  return(list("model"=model, "dirName"=tmpdir_name))
+}
+
 buildModelSaveMojoPCA <- function(params) {
 model <- do.call("h2o.prcomp", params)
 model_key <- model@model_id

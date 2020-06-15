@@ -15,7 +15,7 @@ from h2o.utils.typechecks import assert_is_type, Enum, numeric
 
 class H2OGeneralizedAdditiveEstimator(H2OEstimator):
     """
-    General Additive Model
+    Generalized Additive Model
 
     Fits a generalized additive model, specified by a response variable, a set of predictors, and a
     description of the error distribution.

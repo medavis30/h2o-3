@@ -8,6 +8,7 @@ package hex.genmodel.utils;
 public enum DistributionFamily {
   AUTO,  // model-specific behavior
   bernoulli,
+  binomial,
   quasibinomial,
   modified_huber,
   multinomial,
@@ -19,5 +20,7 @@ public enum DistributionFamily {
   huber,
   laplace,
   quantile,
+  fractionalbinomial,
+  negativebinomial,
   custom
 }
